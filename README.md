@@ -1,4 +1,5 @@
 # robus-core
+
 Core connection component of the bot controlling system, which provides the infrastructure for framework nodes to communicate via Redis.
 
 ## How it works
@@ -11,7 +12,7 @@ Core connection component of the bot controlling system, which provides the infr
 
 ## Directory structure
 
-```
+```markdown
 robus-core/
 ├── libs/               # Shared libraries (TelemetryBroker, sensor drivers)
 ├── setup/              # Setup and launch scripts
@@ -32,11 +33,13 @@ bash setup/setup_redis.sh
 ### 2. Configure autostart (optional)
 
 **Linux:**
+
 ```bash
 bash setup/configure_startup.sh
 ```
 
 **Windows:**
+
 ```bat
 setup\configure_startup.bat
 ```
@@ -46,11 +49,13 @@ setup\configure_startup.bat
 ### Start all nodes
 
 **Linux:**
+
 ```bash
 bash setup/start.sh
 ```
 
 **Windows:**
+
 ```bat
 setup\start.bat
 ```
