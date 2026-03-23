@@ -4,24 +4,31 @@
 ROBUS_CORE="$(cd "$(dirname "$0")/.." && pwd)"
 PARENT="$(dirname "$ROBUS_CORE")"
 
-if [ -f "$ROBUS_CORE/venv/bin/activate" ]; then
-    echo "Activating venv: $ROBUS_CORE/venv"
-    source "$ROBUS_CORE/venv/bin/activate"
-elif [ -f "$ROBUS_CORE/env/bin/activate" ]; then
-    echo "Activating venv: $ROBUS_CORE/env"
-    source "$ROBUS_CORE/env/bin/activate"
-elif [ -f "$PARENT/venv/bin/activate" ]; then
-    echo "Activating venv: $PARENT/venv"
-    source "$PARENT/venv/bin/activate"
-elif [ -f "$PARENT/env/bin/activate" ]; then
-    echo "Activating venv: $PARENT/env"
-    source "$PARENT/env/bin/activate"
+ACTIVATE=""
+VENV_PATH=""
+for BASE in "$ROBUS_CORE" "$PARENT"; do
+    for NAME in venv env; do
+        for BINDIR in bin Scripts; do
+            CANDIDATE="$BASE/$NAME/$BINDIR/activate"
+            if [ -f "$CANDIDATE" ]; then
+                ACTIVATE="$CANDIDATE"
+                VENV_PATH="$BASE/$NAME"
+                break 3
+            fi
+        done
+    done
+done
+
+if [ -n "$ACTIVATE" ]; then
+    echo "Activating venv: $VENV_PATH"
+    source "$ACTIVATE"
 else
-    echo "No virtual environment found in:"
-    echo "  $ROBUS_CORE/venv"
-    echo "  $ROBUS_CORE/env"
-    echo "  $PARENT/venv"
-    echo "  $PARENT/env"
+    echo "No virtual environment found. Checked:"
+    for BASE in "$ROBUS_CORE" "$PARENT"; do
+        for NAME in venv env; do
+            echo "  $BASE/$NAME"
+        done
+    done
     echo "Using system Python."
 fi
 
