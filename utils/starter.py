@@ -31,15 +31,17 @@ files = detect_nodes.detect()
 
 print("Start of", len(files), "nodes")
 
+python_exec = sys.executable
+
 for file in files:
     print(file)
 
     if os.name == 'posix':
         #LINUX:
-        command = f'python "{file}"; echo "Script finished. Press Enter to close..."; read'
+        command = f'"{python_exec}" "{file}"; echo "Script finished. Press Enter to close..."; read'
         subprocess.Popen(["lxterminal", "--command", f"bash -c '{command}'"])
 
     elif os.name == 'nt':
         #WINDOWS:
-        command = f'python "{file}"'
+        command = f'"{python_exec}" "{file}"'
         subprocess.Popen(f'start cmd /k "{command}"', shell=True)
