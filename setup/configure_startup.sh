@@ -2,7 +2,7 @@
 # Configures Linux autostart to run starter.py at user login.
 # Creates ~/.config/autostart/nodestarter.desktop
 
-STARTER_PATH="$(cd "$(dirname "$0")/.." && pwd)/utils/starter.py"
+STARTER_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/utils/starter.py"
 DESKTOP_FILE="$HOME/.config/autostart/nodestarter.desktop"
 
 mkdir -p "$HOME/.config/autostart"

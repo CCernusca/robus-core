@@ -1,7 +1,7 @@
 #!/bin/bash
 # Activates the Python virtual environment (if present) and starts starter.py.
 
-ROBUS_CORE="$(cd "$(dirname "$0")/.." && pwd)"
+ROBUS_CORE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PARENT="$(dirname "$ROBUS_CORE")"
 
 ACTIVATE=""
