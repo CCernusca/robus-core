@@ -16,6 +16,7 @@ import os
 import sys
 import subprocess
 import time
+import shutil
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -48,7 +49,23 @@ for file in files:
     if os.name == 'posix':
         #LINUX:
         command = f'"{python_exec}" "{file}"; echo "Script finished. Press Enter to close..."; read'
-        subprocess.Popen(["lxterminal", "--command", f"bash -c '{command}'"])
+
+        terminal = None
+        for t in ["lxterminal", "gnome-terminal", "konsole", "x-terminal-emulator"]:
+            if shutil.which(t):
+                terminal = t
+                break
+
+        if terminal:
+            if terminal == "gnome-terminal":
+                subprocess.Popen([terminal, "--", "bash", "-c", command])
+            elif terminal == "konsole":
+                subprocess.Popen([terminal, "-e", "bash", "-c", command])
+            else:
+                subprocess.Popen([terminal, "-e", f"bash -c '{command}'"])
+        else:
+            print("No GUI terminal found → running in background")
+            subprocess.Popen(command, shell=True)
 
     elif os.name == 'nt':
         #WINDOWS:

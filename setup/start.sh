@@ -32,6 +32,17 @@ else
     echo "Using system Python."
 fi
 
+# Install Python dependencies if requirements.txt exists
+REQ_FILE="$ROBUS_CORE/../requirements.txt"
+
+if [ -f "$REQ_FILE" ]; then
+    echo "Installing Python dependencies from $REQ_FILE"
+    python3 -m pip install --upgrade pip
+    python3 -m pip install -r "$REQ_FILE"
+else
+    echo "No requirements.txt found at $REQ_FILE"
+fi
+
 # Run Redis setup script if present
 SETUP_SCRIPT="$ROBUS_CORE/setup/setup_redis.sh"
 if [ -f "$SETUP_SCRIPT" ]; then

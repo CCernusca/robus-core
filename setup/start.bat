@@ -24,6 +24,17 @@ if defined ACTIVATE (
     echo Using system Python.
 )
 
+:: Install Python dependencies if requirements.txt exists
+set REQ_FILE=%ROBUS_CORE%\..\requirements.txt
+
+if exist "%REQ_FILE%" (
+    echo Installing Python dependencies from %REQ_FILE%
+    python -m pip install --upgrade pip
+    python -m pip install -r "%REQ_FILE%"
+) else (
+    echo No requirements.txt found at %REQ_FILE%
+)
+
 :: Run Redis setup script if present
 set SETUP_SCRIPT=%ROBUS_CORE%\setup\setup_redis.bat
 if exist "%SETUP_SCRIPT%" (
