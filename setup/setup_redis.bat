@@ -4,4 +4,3 @@
 
 echo WARNING: Redis setup must be run on Linux.
 echo Please run setup_redis.sh on the target Linux system.
-pause

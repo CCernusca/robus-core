@@ -32,4 +32,13 @@ else
     echo "Using system Python."
 fi
 
-python "$ROBUS_CORE/utils/starter.py"
+# Run Redis setup script if present
+SETUP_SCRIPT="$ROBUS_CORE/setup/setup_redis.sh"
+if [ -f "$SETUP_SCRIPT" ]; then
+    echo "Running Redis setup: $SETUP_SCRIPT"
+    bash "$SETUP_SCRIPT"
+else
+    echo "No setup_redis.sh found at $SETUP_SCRIPT"
+fi
+
+python3 "$ROBUS_CORE/utils/starter.py"

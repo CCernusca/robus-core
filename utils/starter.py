@@ -24,7 +24,16 @@ import utils.detect_nodes as detect_nodes
 
 #time.sleep(5)
 
-mb = TelemetryBroker()
+print("Waiting for Redis connection:")
+wait_on_redis = True
+while wait_on_redis:
+    try:
+        print("Trying to connect to Redis... ", end="")
+        mb = TelemetryBroker()
+        wait_on_redis = False
+    except:
+        pass
+
 mb.clearall()
 
 files = detect_nodes.detect()

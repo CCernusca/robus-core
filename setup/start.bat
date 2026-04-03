@@ -24,6 +24,15 @@ if defined ACTIVATE (
     echo Using system Python.
 )
 
+:: Run Redis setup script if present
+set SETUP_SCRIPT=%ROBUS_CORE%\setup\setup_redis.bat
+if exist "%SETUP_SCRIPT%" (
+    echo Running Redis setup: %SETUP_SCRIPT%
+    call "%SETUP_SCRIPT%"
+) else (
+    echo No setup_redis.bat found at %SETUP_SCRIPT%
+)
+
 python "%ROBUS_CORE%\utils\starter.py"
 goto :eof
 
