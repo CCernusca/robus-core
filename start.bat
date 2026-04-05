@@ -44,7 +44,7 @@ if exist "%SETUP_SCRIPT%" (
     echo No setup_redis.bat found at %SETUP_SCRIPT%
 )
 
-python "%ROBUS_CORE%\utils\starter.py"
+python "%ROBUS_CORE%\utils\starter.py" %*
 goto :eof
 
 :find_venv

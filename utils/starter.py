@@ -23,6 +23,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from libs.lib_telemtrybroker import TelemetryBroker
 import utils.detect_nodes as detect_nodes
 
+DEBUG = any(arg.lower() == "--debug" for arg in sys.argv)
+
 #time.sleep(5)
 
 print("Waiting for Redis connection:")
@@ -68,6 +70,10 @@ for file in files:
             subprocess.Popen(command, shell=True)
 
     elif os.name == 'nt':
-        #WINDOWS:
+        # WINDOWS:
         command = f'"{python_exec}" "{file}"'
-        subprocess.Popen(f'start cmd /c "{command}"', shell=True)
+
+        # Use /k in debug mode (keeps terminal open), otherwise /c
+        cmd_flag = "/k" if DEBUG else "/c"
+
+        subprocess.Popen(f'start cmd {cmd_flag} "{command}"', shell=True)

@@ -60,6 +60,8 @@ bash start.sh
 start.bat
 ```
 
+A '--debug' flag can be added to prevent nodes from closing automatically on error or process end.
+
 This activates the virtual environment if one is found at `venv/` or `env/`, then launches `utils/starter.py`.
 
 ### Stop all nodes

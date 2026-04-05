@@ -52,4 +52,4 @@ else
     echo "No setup_redis.sh found at $SETUP_SCRIPT"
 fi
 
-python3 "$ROBUS_CORE/utils/starter.py"
+python3 "$ROBUS_CORE/utils/starter.py" "$@"
