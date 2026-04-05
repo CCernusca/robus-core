@@ -15,9 +15,9 @@ Core connection component of the bot controlling system, which provides the infr
 ```markdown
 robus-core/
 ├── libs/               # Shared libraries (TelemetryBroker, sensor drivers)
-├── setup/              # Setup and launch scripts
 ├── tmp/                # Runtime output (gitignored)
-└── utils/              # Core scripts (starter, stop, node detection)
+├── utils/              # Core python scripts (starter, stop, node detection)
+└── various helper scripts
 
 ../                     # Parent directory — place node_*.py files here
 ```
@@ -27,7 +27,7 @@ robus-core/
 ### 1. Install Redis (Linux)
 
 ```bash
-bash setup/setup_redis.sh
+bash setup_redis.sh
 ```
 
 ### 2. Configure autostart (optional)
@@ -35,13 +35,13 @@ bash setup/setup_redis.sh
 **Linux:**
 
 ```bash
-bash setup/configure_startup.sh
+bash configure_startup.sh
 ```
 
 **Windows:**
 
 ```bat
-setup\configure_startup.bat
+configure_startup.bat
 ```
 
 ## Running
@@ -51,22 +51,32 @@ setup\configure_startup.bat
 **Linux:**
 
 ```bash
-bash setup/start.sh
+bash start.sh
 ```
 
 **Windows:**
 
 ```bat
-setup\start.bat
+start.bat
 ```
 
 This activates the virtual environment if one is found at `venv/` or `env/`, then launches `utils/starter.py`.
 
 ### Stop all nodes
 
+**Linux:**
+
 ```bash
-python utils/stop.py
+bash stop.sh
 ```
+
+**Windows:**
+
+```bat
+stop.bat
+```
+
+This activates the virtual environment if one is found at `venv/` or `env/`, then launches `utils/stop.py`.
 
 ## Virtual environment
 

@@ -70,4 +70,4 @@ for file in files:
     elif os.name == 'nt':
         #WINDOWS:
         command = f'"{python_exec}" "{file}"'
-        subprocess.Popen(f'start cmd /k "{command}"', shell=True)
+        subprocess.Popen(f'start cmd /c "{command}"', shell=True)
