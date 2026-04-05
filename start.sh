@@ -1,7 +1,7 @@
 #!/bin/bash
 # Activates the Python virtual environment (if present) and starts starter.py.
 
-ROBUS_CORE="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ROBUS_CORE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PARENT="$(dirname "$ROBUS_CORE")"
 
 ACTIVATE=""
@@ -44,7 +44,7 @@ else
 fi
 
 # Run Redis setup script if present
-SETUP_SCRIPT="$ROBUS_CORE/setup/setup_redis.sh"
+SETUP_SCRIPT="$ROBUS_CORE/setup_redis.sh"
 if [ -f "$SETUP_SCRIPT" ]; then
     echo "Running Redis setup: $SETUP_SCRIPT"
     bash "$SETUP_SCRIPT"
