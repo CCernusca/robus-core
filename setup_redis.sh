@@ -6,11 +6,12 @@ set -e
 
 sudo apt update
 sudo apt upgrade -y
-sudo apt install -y redis-server
+sudo apt install -y redis-server hostapd dnsmasq
 
 sudo systemctl start redis-server
 sudo systemctl enable redis-server
 
+ROBUS_CORE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REDIS_CONF=/etc/redis/redis.conf
 
 if grep -q "^save" "$REDIS_CONF"; then
@@ -24,6 +25,9 @@ if grep -q "^appendonly" "$REDIS_CONF"; then
 else
     echo 'appendonly no' | sudo tee -a "$REDIS_CONF" > /dev/null
 fi
+
+# Activate redis over hotspot
+sudo python3 "$ROBUS_CORE/utils/web_redis.py"
 
 sudo systemctl restart redis-server
 
