@@ -25,6 +25,15 @@ import utils.detect_nodes as detect_nodes
 
 DEBUG = any(arg.lower() == "--debug" for arg in sys.argv)
 
+# Parse --no-output: node names listed here keep their output; all others get --no-output
+no_output_exceptions = []
+if "--no-output" in sys.argv:
+    idx = sys.argv.index("--no-output")
+    for arg in sys.argv[idx + 1:]:
+        if arg.startswith("--"):
+            break
+        no_output_exceptions.append(arg)
+
 #time.sleep(5)
 
 print("Waiting for Redis connection:")
@@ -48,9 +57,12 @@ python_exec = sys.executable
 for file in files:
     print(file)
 
+    node_name = os.path.splitext(os.path.basename(file))[0]
+    no_output_flag = "" if node_name in no_output_exceptions else " --no-output"
+ 
     if os.name == 'posix':
         #LINUX:
-        command = f'"{python_exec}" "{file}"; echo "Script finished. Press Enter to close..."; read'
+        command = f'"{python_exec}" "{file}"{no_output_flag}; echo "Script finished. Press Enter to close..."; read'
 
         terminal = None
         for t in ["lxterminal", "gnome-terminal", "konsole", "x-terminal-emulator"]:
@@ -71,7 +83,7 @@ for file in files:
 
     elif os.name == 'nt':
         # WINDOWS:
-        command = f'"{python_exec}" "{file}"'
+        command = f'"{python_exec}" "{file}"{no_output_flag}'
 
         # Use /k in debug mode (keeps terminal open), otherwise /c
         cmd_flag = "/k" if DEBUG else "/c"
